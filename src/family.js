@@ -19,6 +19,7 @@ const names = (credential.getValue('names') || '')
   .toLowerCase()
   .split(',')
   .filter(Boolean)
+  .map((name) => name.trim())
 
 names.forEach((name) => {
   const regex = new RegExp(`\\b${name}\\b`, 'gi')
