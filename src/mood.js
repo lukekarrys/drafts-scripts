@@ -28,6 +28,8 @@ if (rawTags.length) {
     attribute: 'custom/append'
   })
 
+  const x = 1
+
   const [foundTags, newTags] = rawTags
     .map((tag) => {
       const display = tag.toLowerCase().trim()
