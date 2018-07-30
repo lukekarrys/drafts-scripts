@@ -9,7 +9,7 @@
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "husky": "^1.0.0-rc.8",
+    "husky": "^1.0.0-rc.13",
     "lint-staged": "^7.1.2",
     "lodash": "^4.17.10",
     "mockdate": "^2.0.2",
