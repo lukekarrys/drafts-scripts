@@ -29,10 +29,14 @@ if (rawTags.length) {
   })
 
   const [foundTags, newTags] = rawTags
-    .map((tag) => tag.toLowerCase().trim())
+    .map((tag) => {
+      const display = tag.toLowerCase().trim()
+      const id = display.replace(/\s+/g, '_').replace(/\W/g, '')
+      return { tag: display, id }
+    })
     .reduce(
-      (acc, tag) => {
-        acc[existingTags.includes(tag) ? 0 : 1].push(tag)
+      (acc, { tag, id }) => {
+        acc[existingTags.includes(id) ? 0 : 1].push(tag)
         return acc
       },
       [[], []]

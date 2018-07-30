@@ -10,6 +10,7 @@ testEach('it works', (t, sandbox) => {
       '3',
       'tired',
       'travel',
+      'exercise run',
       'removethistag',
       '',
       'this is a longer thing. much longer.',
@@ -28,7 +29,8 @@ testEach('it works', (t, sandbox) => {
         statusCode: 200,
         responseText: JSON.stringify([
           { group: { name: 'custom' }, attribute: 'tired' },
-          { group: { name: 'custom' }, attribute: 'travel' }
+          { group: { name: 'custom' }, attribute: 'travel' },
+          { group: { name: 'custom' }, attribute: 'exercise_run' }
         ]),
         error: ''
       })
@@ -48,6 +50,7 @@ testEach('it works', (t, sandbox) => {
     '### Tags',
     '- tired',
     '- travel',
+    '- exercise run',
     '',
     '### Gratitude',
     'this is a longer thing. much longer.',
