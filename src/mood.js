@@ -75,6 +75,27 @@ existRequest({
   }
 })
 
+if (YESTERDAY) {
+  const p = Prompt.create()
+  p.title = 'Yesterday!'
+  p.message = 'Don’t forget to change the DayOne entry date!'
+  p.addButton('OK')
+  p.show()
+} else {
+  const streakCredential = Credential.create(
+    'Streaks',
+    'ID of the streak to use in the callback url.'
+  )
+  streakCredential.addTextField('id', 'id')
+  streakCredential.authorize()
+  const streakID = streakCredential.getValue('id')
+  if (streakID) {
+    const cb = CallbackURL.create()
+    cb.baseURL = 'streaks://x-callback-url/completed/task/p' + streakID
+    cb.open()
+  }
+}
+
 setTags(ID_TAG)
 
 draft.content = outdent`
@@ -91,18 +112,6 @@ draft.content = outdent`
   ${day.join('\n\n').trim()}
 `
 draft.update()
-
-if (YESTERDAY) {
-  const p = Prompt.create()
-  p.title = 'Yesterday!'
-  p.message = 'Don’t forget to change the DayOne entry date!'
-  p.addButton('OK')
-  p.show()
-} else {
-  const cb = CallbackURL.create()
-  cb.baseURL = 'streaks://x-callback-url/completed/task/p33'
-  cb.open()
-}
 
 new DayOne({
   journal: 'Mood',
