@@ -17,8 +17,22 @@ let [mood, ...rawTags] = data.toLowerCase().split('\n')
 
 const ID_TAG = 'mood'
 const NOW = new Date()
-const YESTERDAY = mood.includes('yesterday') || NOW.getHours() < 16
-const DATE = ts(YESTERDAY ? (NOW.setDate(NOW.getDate() - 1), NOW) : NOW)
+const MOOD_DATE = mood.match(/(\d{4})-(\d{2})-(\d{2})$/)
+const YESTERDAY = MOOD_DATE || mood.includes('yesterday') || NOW.getHours() < 16
+const DATE = ts(
+  MOOD_DATE
+    ? new Date(
+        MOOD_DATE[1],
+        parseInt(MOOD_DATE[2], 10) - 1,
+        MOOD_DATE[3],
+        NOW.getHours(),
+        NOW.getMinutes(),
+        NOW.getSeconds()
+      )
+    : YESTERDAY
+      ? (NOW.setDate(NOW.getDate() - 1), NOW)
+      : NOW
+)
 
 mood = parseInt(mood, 10).toString()
 
@@ -77,7 +91,7 @@ existRequest({
 
 if (YESTERDAY) {
   const p = Prompt.create()
-  p.title = 'Yesterday!'
+  p.title = 'Date!'
   p.message = 'Don’t forget to change the DayOne entry date!'
   p.addButton('OK')
   p.show()
