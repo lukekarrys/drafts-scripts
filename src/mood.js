@@ -105,7 +105,7 @@ if (YESTERDAY) {
   const streakID = streakCredential.getValue('id')
   if (streakID) {
     const cb = CallbackURL.create()
-    cb.baseURL = 'streaks://x-callback-url/completed/task/p' + streakID
+    cb.baseURL = 'streaks://x-callback-url/completed/task/' + streakID
     cb.open()
   }
 }
