@@ -8,10 +8,11 @@ processDraft()
 const VALID_TYPES = ['tv', 'movie', 'book', 'music']
 
 const ID_TAG = 'media'
-const [type, title, score, ...review] = draft.content
+const [type, title, scoreOrOngoing, ...review] = draft.content
   .split('\n')
   .filter(Boolean)
   .map((l) => l.trim())
+let score = null
 const tags = [ID_TAG, type]
 
 if (!VALID_TYPES.includes(type)) {
@@ -24,11 +25,16 @@ const fullReview = review
   .trim()
 
 if (!fullReview.length) tags.push('todo')
+if (scoreOrOngoing.toLowerCase() === 'ongoing') {
+  tags.push('ongoing')
+} else {
+  score = scoreOrOngoing
+}
 setTags(...tags)
 
 draft.content = outdent`
   # ${title}
-  ### Score ${score}
+  ### Score ${score || ''}
 
   ${fullReview}
 `

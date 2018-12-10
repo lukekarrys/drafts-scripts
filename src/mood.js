@@ -4,6 +4,7 @@ import { ts, processDraft } from '../lib/helpers'
 import existRequest from '../lib/exist-request'
 import DayOne from '../lib/dayone'
 import { setTags, getTags } from '../lib/journal-tags'
+import getToken from '../lib/exist-token'
 
 processDraft()
 
@@ -36,11 +37,13 @@ const DATE = ts(
 
 mood = parseInt(mood, 10).toString()
 
+const token = getToken(
+  'mood-tag-token',
+  'Your token for getting and updating your Exist mood and tags'
+)
+
 if (rawTags.length) {
-  const existingTags = getExistTags({
-    tokenLabel: 'Token for appending custom tags',
-    attribute: 'custom/append'
-  })
+  const existingTags = getExistTags({ token })
 
   const [foundTags, newTags] = rawTags
     .map((tag) => {
@@ -73,14 +76,14 @@ if (rawTags.length) {
   }
 
   existRequest({
-    tokenLabel: 'Token for appending custom tags',
+    token,
     attribute: 'custom/append',
     data: appendTags.map((tag) => ({ date: DATE, value: tag }))
   })
 }
 
 existRequest({
-  tokenLabel: 'Token for updating mood',
+  token,
   attribute: 'update',
   data: {
     name: 'mood',
