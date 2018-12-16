@@ -24,12 +24,12 @@ const fullReview = review
   .join('\n\n')
   .trim()
 
-if (!fullReview.length) tags.push('todo')
 if (scoreOrOngoing.toLowerCase() === 'ongoing') {
   tags.push('ongoing')
 } else {
   score = scoreOrOngoing
 }
+if (!fullReview.length && !tags.includes('ongoing')) tags.push('todo')
 setTags(...tags)
 
 draft.content = outdent`
