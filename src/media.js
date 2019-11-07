@@ -8,10 +8,11 @@ processDraft()
 const VALID_TYPES = ['tv', 'movie', 'book', 'music']
 
 const ID_TAG = 'media'
-const [type, title, scoreOrOngoing, ...review] = draft.content
+let [contentType, title, scoreOrOngoing, ...review] = draft.content
   .split('\n')
   .filter(Boolean)
   .map((l) => l.trim())
+let type = contentType.toLowerCase()
 let score = null
 const tags = [ID_TAG, type]
 
